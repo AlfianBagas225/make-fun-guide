@@ -53,8 +53,9 @@ Four things worth knowing before you start:
 - **Most bounties are free to enter.** One with an entry fee says so on its page,
   and the fee goes into that bounty's reward.
 - **The reward is there before you build.** Bounties open with the whole reward
-  locked in an on-chain escrow on Solana where the escrow can be funded; the
-  bounty page says exactly how each one pays out.
+  locked in an on-chain escrow on Solana — the escrow program is open source
+  ([github.com/makedotfun/prize-escrow](https://github.com/makedotfun/prize-escrow));
+  the bounty page says exactly how each one pays out.
 - **Transcripts keep it fair.** Your entry carries the session logs your agent
   wrote while it built the code. They prove your own agent did the work — not
   someone else's code passed off as yours. That is why you build in a fresh
@@ -223,7 +224,9 @@ node cli/makefun.mjs submit --competition <bounty-slug> \
 `--keypair` signs the entry with the wallet `login` set up in step 1, which
 every bounty with an escrowed reward asks for. That wallet is where the reward
 will be paid. A signed entry message is good for 10 minutes, so sign and submit
-back to back — and never submit in the last 30 minutes before a deadline.
+back to back — and never submit in the last 30 minutes before a deadline. Keep
+the receipt the submit command prints: it is your proof of when the entry
+landed, and receipt time breaks ties.
 
 ## 6. Check it, fix it, resubmit
 
@@ -252,9 +255,13 @@ node cli/makefun.mjs claim --claim <claim-id> \
 `--us-person` answers the screen's one question; say `yes` if you are a US
 person. The reward is paid in USDC on Solana to your own wallet, after an
 automatic sanctions screen. A tax form is asked for only where US law requires
-one — for most winners, never. Results land after the final check (about 30
-hours after the deadline), and a prize must be claimed within 7 days, or it
-passes to the next entry in the standings.
+one — for most winners, never. Your wallet pays the claim's network fee and,
+on a first claim, the rent of its prize token account and claim receipt —
+about 0.0025 SOL in total, so keep a little SOL in the wallet. Results
+publish once the final check (about 30 hours after the deadline) has verified
+every signup and re-read every entry's repository — this bounty's result is
+due 6 Dec 2026 — and the claim window is shown on the bounty page and in
+`status`, so claim promptly once your reward is ready.
 
 ## How entries are scored
 
@@ -355,6 +362,33 @@ make.fun reads them to check that your own agent built the entry. The kit strips
 credentials, e-mail addresses and home paths before upload, and
 `bundle --redact "<text>"` removes any other personal detail you name. Only you
 and the organisers see them — never the public board.
+</details>
+
+<details>
+<summary><strong>I don't have a Solana wallet yet — what do I do?</strong></summary>
+
+You do not need one to sign up. Sign in with GitHub, Google, Apple or
+Discord, then link a wallet from your profile when you are ready to claim.
+If you have no wallet at all, the kit's first `login` creates a keypair for
+this machine and puts its wallet on your account — that wallet can receive
+your USDC. Back up that keypair file; whoever holds it holds the funds.
+</details>
+
+<details>
+<summary><strong>How long until I know if I won?</strong></summary>
+
+Results come after the deadline, once the final check (about 30 hours) has
+verified every signup and re-read every entry's repository. Referral contests
+take longer than code-graded ones, because each signup waits out its own
+24-hour review hold first. Watch the bounty page and your notifications
+rather than refreshing `status` every hour.
+</details>
+
+<details>
+<summary><strong>Can I enter more than one bounty at a time?</strong></summary>
+
+Yes. Each bounty is a separate entry with its own kit, repo and transcripts.
+Start a fresh agent session per bounty so the transcripts stay clean.
 </details>
 
 <details>
